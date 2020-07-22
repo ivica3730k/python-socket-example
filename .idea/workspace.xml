@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8025a24e-b343-46c6-abc7-882ab1734733" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/python-socket-example.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/python-socket-example.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opencv-client.py" beforeDir="false" afterPath="$PROJECT_DIR$/opencv-client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opencv-server.py" beforeDir="false" afterPath="$PROJECT_DIR$/opencv-server.py" afterDir="false" />
     </list>
@@ -34,5 +36,11 @@
       <updated>1595435580011</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="418" y="197" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595441514429">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="418" y="197" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.505.1366.768@0.0.1920.1080" timestamp="1595441514429" />
   </component>
 </project>

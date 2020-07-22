@@ -1,30 +1,19 @@
-import cv2
 import pickle
 import socket
-import numpy as np
 
+import cv2
 
-def recvall(sock, n=1024):
-    data = bytearray()
-    while True:
-        packet = sock.recv(n)
-        if not packet:  # Important!!
-            break
-        data.extend(packet)
-        if len(packet) < n:
-            break
-    return data
+HOST = '0.0.0.0'
+PORT = 8011
 
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+socket.connect(('localhost', 8011))
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('localhost', 8011))
+cam = cv2.VideoCapture(1)
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 100]
 
 while True:
-    try:
-        data = recvall(client_socket)
-        data = np.array(data)
-        img = cv2.imdecode(data, cv2.IMREAD_COLOR)
-        cv2.imshow('Pic', img)
-        cv2.waitKey(1)
-    except:
-        print("Error")
+    ret, frame = cam.read()
+    result, frame = cv2.imencode('.jpg', frame, encode_param)
+    frame = pickle.dumps(frame)
+    socket.sendall(frame)
