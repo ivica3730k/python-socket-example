@@ -19,5 +19,4 @@ conn,addr=s.accept()
 while True:
     ret, frameOriginal = cam.read()
     result, frame = cv2.imencode('.jpg', frameOriginal, encode_param)
-    data = pickle.dumps(frame,0)
-    conn.sendall(data)
+    conn.sendall(frame)
