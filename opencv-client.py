@@ -1,3 +1,4 @@
+import cv2
 import pickle
 import socket
 
@@ -17,6 +18,12 @@ def recvall(sock, n=4096):
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect(('localhost', 8011))
 
-data = recvall(client_socket)
-a = pickle.loads(data)
-print(len(a))
+while True:
+    try:
+        data = recvall(client_socket)
+        frame = pickle.loads(data)
+        img = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+        cv2.imshow('Pic', img)
+        cv2.waitKey(1)
+    except pickle.UnpicklingError:
+        continue
