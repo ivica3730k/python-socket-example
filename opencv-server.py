@@ -1,46 +1,34 @@
-import _thread
 import pickle
 import socket
+import struct
 
 import cv2
 
-HOST = '0.0.0.0'
+HOST = '127.0.0.1'
 PORT = 8011
 
-
-def recvall(sock, n=1024):
-    data = bytearray()
-    while True:
-        packet = sock.recv(n)
-        if not packet:  # Important!!
-            break
-        data.extend(packet)
-        if len(packet) < n:
-            break
-    return data
-
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 s.bind((HOST, PORT))
 s.listen(10)
+conn, addr = s.accept()
 
-
-def handle_socket(conn, addr):
-    while True:
-        try:
-            data = recvall(conn)
-            data = pickle.loads(data)
-            img = cv2.imdecode(data, cv2.IMREAD_COLOR)
-            cv2.imshow(str(addr), img)
-            cv2.waitKey(1)
-        except pickle.UnpicklingError:
-            continue
-        except:
-            break
-
+data = bytearray()
+payload_size = struct.calcsize("L")
 
 while True:
-    conn, addr = s.accept()
-    print("New Client")
-    _thread.start_new_thread(handle_socket, (conn, addr))
+    while len(data) < payload_size:
+        data += conn.recv(4096)
+    packed_msg_size = data[:payload_size]
+
+    data = data[payload_size:]
+    msg_size = struct.unpack("L", packed_msg_size)[0]
+
+    while len(data) < msg_size:
+        data.extend(conn.recv(4096))
+    frame_data = data[:msg_size]
+    data = data[msg_size:]
+
+    frame = pickle.loads(frame_data)
+    cv2.imshow('frame', frame)
+    cv2.waitKey(10)
