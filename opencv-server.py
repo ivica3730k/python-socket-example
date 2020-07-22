@@ -4,7 +4,7 @@ import struct
 
 import cv2
 
-HOST = '127.0.0.1'
+HOST = '0.0.0.0'
 PORT = 8011
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,5 +30,6 @@ while True:
     data = data[msg_size:]
 
     frame = pickle.loads(frame_data)
+    frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
     cv2.imshow('frame', frame)
     cv2.waitKey(10)
