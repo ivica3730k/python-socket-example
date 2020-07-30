@@ -11,7 +11,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 s.bind((HOST, PORT))
 s.listen(10)
-conn, addr = s.accept()
+conn, address = s.accept()
 
 data = bytearray()
 payload_size = struct.calcsize("L")

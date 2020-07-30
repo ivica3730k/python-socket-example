@@ -1,15 +1,21 @@
-import imagiz
 import cv2
 
+cap = cv2.VideoCapture("/dev/video2")
+cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('U', 'Y', 'V', 'Y'))
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 2304)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1536)
+fps = cap.get(cv2.CAP_PROP_FPS)
+print(fps)
 
-client=imagiz.Client("cc1",server_ip="localhost")
-vid=cv2.VideoCapture(0)
-encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 100]
-
+i = 0
 while True:
-    r,frame=vid.read()
-    if r:
-        r, image = cv2.imencode('.jpg', frame, encode_param)
-        client.send(image)
-    else:
+    try:
+        r, frame = cap.read()
+    except cv2.error:
+        continue
+    cv2.imshow("s", frame)
+    cv2.imwrite(str(i) + ".jpg", frame)
+    cv2.waitKey(1)
+    i += 1
+    if i > 10:
         break
