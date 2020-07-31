@@ -8,8 +8,8 @@ Configurations for both sides
 """
 
 # Audio parameters, do not exceed chunk greater that 4096
-CHUNK = 4096
-RATE = 44100
+CHUNK = 1024
+RATE = 22050
 
 """
 Configuration for client side

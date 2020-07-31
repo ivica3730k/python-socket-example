@@ -22,3 +22,6 @@ class Fifo:
 
     def __len__(self):
         return len(self._buf)
+
+    def clean(self):
+        self._buf = bytearray()
