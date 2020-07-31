@@ -8,8 +8,8 @@ Configurations for both sides
 """
 
 # Audio parameters, do not exceed chunk greater that 4096
-CHUNK = 1024
-RATE = 22050
+CHUNK = 512
+RATE = 44100
 
 """
 Configuration for client side
@@ -17,10 +17,10 @@ Configuration for client side
 
 
 class Client:
-    SERVER_IP = "localhost"
+    SERVER_IP = "192.168.1.104"
     SERVER_PORT = 8081
 
 
 class Server:
-    CLIENT_IP = "localhost"
+    CLIENT_IP = "192.168.1.107"
     CLIENT_PORT = 8082
