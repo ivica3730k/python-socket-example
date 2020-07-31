@@ -4,7 +4,7 @@ import Fifo
 import config
 
 _received_queue = Fifo.Fifo()
-silence = chr(0) * config.CHUNK * 2 * 2
+silence = chr(0) * config.CHUNK * 2 * 4
 
 _sending_queue = Fifo.Fifo()
 
@@ -13,15 +13,20 @@ def receive_audio(audio_stream, socket_connection, chunk=config.CHUNK):
     t1 = threading.Thread(target=play_audio, args=(audio_stream,))
     t1.start()
     while True:
-        _received_queue.put(socket_connection.recv(chunk))
+        _received_queue.put(socket_connection.recvfrom(chunk))
 
 
-def send_audio(audio_stream, socket_connection, chunk=config.CHUNK):
+def send_audio(audio_stream, socket_connection, role, chunk=config.CHUNK):
     t1 = threading.Thread(target=record_audio, args=(audio_stream,))
     t1.start()
     while True:
         if len(_sending_queue):
-            socket_connection.sendall(_sending_queue.get(chunk))
+            if role == "CLIENT":
+                socket_connection.sendto(_sending_queue.get(chunk),
+                                         (config.Client.SERVER_IP, config.Client.SERVER_PORT))
+            else:
+                socket_connection.sendto(_sending_queue.get(chunk),
+                                         (config.Server.CLIENT_IP, config.Server.CLIENT_PORT))
 
 
 def play_audio(audio_stream, chunk=config.CHUNK):
