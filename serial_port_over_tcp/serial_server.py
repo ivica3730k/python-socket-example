@@ -7,8 +7,7 @@ import config as config
 import serial_functions
 
 SERIAL_PORT = config.Server.SERIAL_PORT
-SERIAL_BAUD = config.Server.SERIAL_BAUD
-ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=1)
+ser = serial.Serial(SERIAL_PORT, timeout=1)
 
 HOST = '0.0.0.0'  # This means our server can be accessed from everywhere
 PORT = config.PORT

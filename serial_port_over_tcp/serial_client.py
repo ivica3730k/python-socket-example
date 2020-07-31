@@ -7,8 +7,7 @@ import config as config
 import serial_functions
 
 SERIAL_PORT = config.Client.SERIAL_PORT
-SERIAL_BAUD = config.Client.SERIAL_BAUD
-ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=1)
+ser = serial.Serial(SERIAL_PORT, timeout=1)
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 conn.connect((config.Client.SERVER_IP, config.PORT))
