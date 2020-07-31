@@ -2,3 +2,5 @@
 serial_port_over_tcp/__pycache__/
 
 .idea/
+
+audio_over_tcp/__pycache__/
