@@ -1,18 +1,14 @@
-def recvall(sock, n=4096):
-    data = bytearray()
-    while True:
-        packet = sock.recv(n)
-        if not packet:  # Important!!
-            break
-        data.extend(packet)
-        if len(packet) < n:
-            break
-    return data
+import config as config
+from socket_functions import *
 
 
 def readSerialWriteToSocket(serial_connection, socket_connection):
     while True:
-        data = serial_connection.read()
+        data = None
+        if config.OPTIMIZE_FOR_SERIAL_LINES:
+            data = serial_connection.readline()
+        else:
+            data = serial_connection.read()
         # data = pickle.dumps(data)
         socket_connection.sendall(data)
 

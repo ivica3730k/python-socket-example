@@ -3,14 +3,15 @@ import threading
 
 import serial
 
+import config as config
 import serial_functions
 
-SERIAL_PORT = "/dev/ttyUSB1"
-SERIAL_BAUD = 9600
+SERIAL_PORT = config.Client.SERIAL_PORT
+SERIAL_BAUD = config.Client.SERIAL_BAUD
 ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=1)
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-conn.connect(('localhost', 8080))
+conn.connect((config.Client.SERVER_IP, config.PORT))
 t1 = threading.Thread(target=serial_functions.readSerialWriteToSocket, args=(ser, conn,))
 t1.start()
 t2 = threading.Thread(target=serial_functions.readSocketWriteToSerial, args=(ser, conn,))
